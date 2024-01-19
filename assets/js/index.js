@@ -8,10 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerElement = document.getElementById("timer");
   const resetBtn = document.getElementById("resetBtn");
 
-  const handleKeyPress = (event) => {
+  const handleKeyPressStart = (event) => {
     if (event.code === "Space") {
       event.preventDefault();
       toggleTimer();
+    }
+  };
+
+  const handleKeyPressReset = (event) => {
+    if (event.code === "KeyR") {
+      event.preventDefault();
+      resetTimer();
     }
   };
 
@@ -54,5 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   resetBtn.addEventListener("click", resetTimer);
-  document.addEventListener("keydown", handleKeyPress);
+  document.addEventListener("keydown", handleKeyPressStart);
+  document.addEventListener("keydown", handleKeyPressReset);
 });
