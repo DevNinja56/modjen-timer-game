@@ -4,14 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
   let timerRunning = false;
   let speed = 1.005;
   let timerInterval;
+  let spaceKeyPressCount = 0;
 
   const timerElement = document.getElementById("timer");
   const resetBtn = document.getElementById("resetBtn");
+  const winnerSound = new Audio("./assets/audio/winner-sound.mp3");
+  const loseSound = new Audio("./assets/audio/lose-sound.mp3");
 
   const handleKeyPressStart = (event) => {
     if (event.code === "Space") {
       event.preventDefault();
-      toggleTimer();
+      if (spaceKeyPressCount < 2) {
+        toggleTimer();
+        spaceKeyPressCount++;
+      }
     }
   };
 
@@ -25,10 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleTimer = () => {
     timerRunning = !timerRunning;
     if (timerRunning) {
+      speed = getRandomSpeed();
       startTime = Date.now() - elapsedTime;
       updateTimer();
     } else {
       clearInterval(timerInterval);
+      checkWinningCondition();
     }
   };
 
@@ -37,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTimer();
     startTime = Date.now();
     elapsedTime = 0;
+    spaceKeyPressCount = 0;
   };
 
   const updateTimer = () => {
@@ -48,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const totalMilliseconds = Math.floor(elapsedTime);
         const seconds = Math.floor((totalMilliseconds / 1000) % 60);
         const milliseconds = totalMilliseconds % 1000;
+
         timerElement.textContent = `${String(seconds).padStart(
           3,
           "0"
@@ -58,6 +68,19 @@ document.addEventListener("DOMContentLoaded", function () {
         ).padStart(3, "0")}`;
       }
     }, 100);
+  };
+
+  const getRandomSpeed = () => {
+    return Math.random() * 1.5;
+  };
+
+  const checkWinningCondition = () => {
+    const totalMilliseconds = Math.floor(elapsedTime);
+    if (totalMilliseconds === 10000) {
+      winnerSound.play();
+    } else {
+      loseSound.play();
+    }
   };
 
   resetBtn.addEventListener("click", resetTimer);
