@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let startTime = 0;
   let elapsedTime = 0;
   let timerRunning = false;
-  let speed = 1.005;
+  let speed = 0.5;
   let timerInterval;
   let spaceKeyPressCount = 0;
 
@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleTimer = () => {
     timerRunning = !timerRunning;
     if (timerRunning) {
-      speed = getRandomSpeed();
       startTime = Date.now() - elapsedTime;
       updateTimer();
     } else {
@@ -67,11 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
           0
         ).padStart(2, "0")}`;
       }
-    }, 160);
-  };
-
-  const getRandomSpeed = () => {
-    return Math.random() * 1.5;
+    }, 50);
   };
 
   const checkWinningCondition = () => {
