@@ -59,15 +59,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const milliseconds = totalMilliseconds % 1000;
 
         timerElement.textContent = `${String(seconds).padStart(
-          3,
+          2,
           "0"
-        )}:${String(milliseconds).padStart(3, "0")}`;
+        )}:${String(Math.floor(milliseconds / 10)).padStart(2, "0")}`;
       } else {
-        timerElement.textContent = `${String(0).padStart(3, "0")}:${String(
+        timerElement.textContent = `${String(0).padStart(2, "0")}:${String(
           0
-        ).padStart(3, "0")}`;
+        ).padStart(2, "0")}`;
       }
-    }, 100);
+    }, 160);
   };
 
   const getRandomSpeed = () => {
